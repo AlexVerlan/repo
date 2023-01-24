@@ -1,25 +1,20 @@
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 
 
 void NSD_radix_sort(int* arr, int size,int raz){
+	int raz_buf=pow(10,raz);
 	int arr_sort[10][size+1];
 	for(int i=0;i<10;++i){
 		arr_sort[i][size]=0;
 	}
 	for(int i=0;i<size;++i){
-		int count_raz=arr[i];
-		for(int x=0;x<raz;++x){
-			count_raz/=10;
-		}
-		int count_size=arr_sort[count_raz][size];
-			
-		int asd=1;
-		for(int i=1;i<=raz;++i){
-			asd*=10;
-		}
+		int count_raz=arr[i]/raz_buf;
 		
-		arr_sort[count_raz][count_size]=(arr[i]%asd);
+		int count_size=arr_sort[count_raz][size];
+		
+		arr_sort[count_raz][count_size]=(arr[i]%raz_buf);
 		++arr_sort[count_raz][size];
 	}
       
@@ -31,14 +26,9 @@ void NSD_radix_sort(int* arr, int size,int raz){
 	for(int i=0;i<10;++i){
 		for(int x=0;x<arr_sort[i][size];++x){
 			arr[idx]=0;
-			for(int buf=1;buf<=raz;++buf){
-				if(arr[idx]==0){
-					(arr[idx])=1;
-				}
-				(arr[idx])*=10;
-			}
 			
-			arr[idx]*=i;
+			
+			arr[idx]=i*raz_buf;
 			arr[idx]+=arr_sort[i][x];
 			++idx;
 		}
@@ -82,5 +72,11 @@ int main(int* argc, char** argv){
 	for(int i=0;i<20;++i){
 		printf("arr_copy[%d]=%d arr[%d]=%d\n",i,arr_copy[i],i,arr[i]);
 	}
+	
+	int idx=1;
+	for(int i=0;i<20;++i){
+		if(arr[i]!=arr_copy[i])idx=0;
+	}
+	if(idx){printf("\n yes ");}else{printf("\n yes ");}
 	return 0;
 }
