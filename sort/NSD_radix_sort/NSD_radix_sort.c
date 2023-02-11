@@ -19,7 +19,7 @@ void NSD_radix_sort(int* arr, int size,int raz){
 	}
       
 	for(int i=0;i<10;++i){
-		if(arr_sort[i][size]>1)NSD_radix_sort(arr_sort[i],arr_sort[i][size],raz-1);
+		if(arr_sort[i][size]>1&&raz>0)NSD_radix_sort(arr_sort[i],arr_sort[i][size],raz-1);
 	}
 	
 	int idx=0;
