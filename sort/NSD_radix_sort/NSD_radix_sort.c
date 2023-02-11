@@ -50,31 +50,31 @@ void insert(int* arr, int size){
 }
 
 int main(int* argc, char** argv){
-	int arr[20];
-	for(int i=0;i<20;++i){
+	int arr[50];
+	for(int i=0;i<50;++i){
 		arr[i]=rand();
 	}
-	int arr_copy[20];
-	for(int i=0;i<20;++i){
+	int arr_copy[50];
+	for(int i=0;i<50;++i){
 		arr_copy[i]=arr[i];
 	}
-	for(int i=0;i<20;++i){
+	for(int i=0;i<50;++i){
 		printf("[%d]=%d ",i,arr[i]);
 	}
 	printf("\n_______\n");
-	for(int i=0;i<20;++i){
+	for(int i=0;i<50;++i){
 		printf("c[%d]=%d ",i,arr_copy[i]);
 	}
 	printf("\n_______\n");
-	NSD_radix_sort((int*)arr,20,9);
+	NSD_radix_sort((int*)arr,50,9);
 
-	insert((int*)arr_copy,20);
-	for(int i=0;i<20;++i){
+	insert((int*)arr_copy,50);
+	for(int i=0;i<50;++i){
 		printf("arr_copy[%d]=%d arr[%d]=%d\n",i,arr_copy[i],i,arr[i]);
 	}
 	
 	int idx=1;
-	for(int i=0;i<20;++i){
+	for(int i=0;i<50;++i){
 		if(arr[i]!=arr_copy[i])idx=0;
 	}
 	if(idx){printf("\n yes ");}else{printf("\n yes ");}
