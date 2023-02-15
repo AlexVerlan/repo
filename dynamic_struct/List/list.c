@@ -61,7 +61,7 @@ Node* pop(list* alfa,int b){
 	}
 }
 
-void print_node(Node*a){
+void print_node(node*a){
 	if(a==NULL){
 		printf("[]");
 		return;
