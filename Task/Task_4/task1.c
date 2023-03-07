@@ -5,41 +5,21 @@ typedef struct{
 	int value;	
 	struct Node** list;
 	int size;
+	int visited;
 }Node;
 
 typedef struct{
 	Node**list;
 	int size;
 	int** matrix;
+	
 
 }Graf;
 
-void node_print(Node* a){
-	printf("p=%p v=%d size=%d\nlist- ",a,a->value,a->size);
-	for(int i=0;i<a->size;++i){
-		printf("%p ",*(a->list+i));	
-	}
-		
-}
 
-void graf_print(Graf* a){
-	printf("size g=%d\nmatrix-\n",a->size);
-	for(int i=0;i<a->size;++i){
-		for(int d=0;d<a->size;++d){
-			printf(" %d ", *((*(a->matrix+i))+d) );
-		}
-		printf("\n");
-	}
-	printf("list->\n");
-	for(int i=0; i<a->size;++i){
-		node_print(*(a->list+i));
-		printf("\n");
-		printf("\n");
-	}
-	
-}
 
 void node_init(Node*a,int value_f,int size_f,Node** list_f ){
+	a->visited=0;
 	a->size=size_f;
 	a->value=value_f;
 	(a->list)=calloc(size_f,sizeof*a->list);
@@ -114,13 +94,56 @@ Graf* graf_init(int* arr_f,int size_f,int** matrix_f){
 
 	return a;
 }
+void node_print( Node* a){
+	printf("p=%p v=%d size=%d\nlist- ",a,a->value,a->size);
+	for(int i=0;i<a->size;++i){
+		printf("%p ",*(a->list+i));	
+	}
+		
+}
 
+void graf_print(Graf* a){
+	printf("size g=%d\nmatrix-\n",a->size);
+	for(int i=0;i<a->size;++i){
+		for(int d=0;d<a->size;++d){
+			printf(" %d ", *((*(a->matrix+i))+d) );
+		}
+		printf("\n");
+	}
+	printf("list->\n");
+	for(int i=0; i<a->size;++i){
+		node_print(*(a->list+i));
+		printf("\n");
+		printf("\n");
+	}
+	
+}
 void graf_free(Graf* a){
 	for(int i=0;i<a->size;++i){
 		free((a->list+i));
 		
 	}
 	free(a);	
+}
+
+void node_stack(Node*a){
+	if (a->visited){
+		return;
+	}
+	a->visited=1;
+	for(int i=0;i<a->size;++i){
+		node_stack(*(a->list+i));
+	}
+	printf("\n");
+	node_print(a);
+
+}
+
+void graf_stack(Graf*a){
+	for(int i=0;i<a->size;++i){
+		node_stack(*(a->list+i));
+		printf("\n");
+	}	
 }
 
 
@@ -146,8 +169,14 @@ int main(int* argc,char**argv){
 		printf("\n");
 		node_print( *((*(a->list))->list+i) );
 	}
+
+	printf("\n stack-\n");
+	graf_stack(a);
+
+
+	
 	graf_free(a);
-	getchar();
+	
 	return 0;
 }
 
